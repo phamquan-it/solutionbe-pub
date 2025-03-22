@@ -1,0 +1,3716 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Solution",
+        "description": "Description of solution API",
+        "license": {
+            "name": "MIT",
+            "url": "https://opensource.org/licenses/MIT"
+        },
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api": {},
+        "/api/login": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Login",
+                "operationId": "a3b306d14572d1f4bd6c064b3233e7b8",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "email",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "john.doe@example.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "securepassword123"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successfully retrieved the resource"
+                    }
+                }
+            }
+        },
+        "/api/register": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Register a new user",
+                "operationId": "registerUser",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "email",
+                                    "password",
+                                    "password_confirmation"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "John Doe"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "johndoe@example.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "password123"
+                                    },
+                                    "password_confirmation": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "password123"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Registration successful",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Registration successful"
+                                        },
+                                        "token": {
+                                            "type": "string",
+                                            "example": "your_generated_token"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid input",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Validation error: email is required"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/logout": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Logout",
+                "operationId": "fe8f3429cd6979b3b4517e186505f9f9",
+                "responses": {
+                    "200": {
+                        "description": "Successfully retrieved the resource"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/change-password": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Change user password",
+                "operationId": "540baf9b2324b156be71c57911de6714",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "current_password",
+                                    "new_password",
+                                    "new_password_confirmation"
+                                ],
+                                "properties": {
+                                    "current_password": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "oldpassword123"
+                                    },
+                                    "new_password": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "NewSecurePassword!1"
+                                    },
+                                    "new_password_confirmation": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "NewSecurePassword!1"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Password changed successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Password updated successfully"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "New password must be different from the old password"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Invalid current password"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/banks": {
+            "get": {
+                "tags": [
+                    "Bank"
+                ],
+                "summary": "Get list of banks",
+                "description": "Display a paginated list of banks.",
+                "operationId": "caa138ee4cdf9701a3ec3c3198e9f777",
+                "responses": {
+                    "200": {
+                        "description": "List of banks"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/cashflows": {
+            "get": {
+                "tags": [
+                    "Cashflows"
+                ],
+                "summary": "Get a list of cashflows",
+                "description": "List cashflows with pagination and filtering.",
+                "operationId": "d6eba57e65843c46109165871c6806cd",
+                "parameters": [
+                    {
+                        "name": "keyword",
+                        "in": "query",
+                        "description": "Filter by keyword",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "action",
+                        "in": "query",
+                        "description": "Filter by action (credit/debit)",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Page number",
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    },
+                    {
+                        "name": "per_page",
+                        "in": "query",
+                        "description": "Items per page",
+                        "schema": {
+                            "type": "integer",
+                            "example": 10
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List of cashflows"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/categories": {
+            "get": {
+                "tags": [
+                    "Categories"
+                ],
+                "summary": "Get list of categories",
+                "operationId": "3f5817a34833d0a1f4af4548dd3aeaba",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Categories"
+                ],
+                "summary": "Create a new category",
+                "operationId": "71fcad552bb0eaba9fb191fd8d8dcab0",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Technology"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Category created"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "422": {
+                        "description": "Validation Error"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/categories/{id}": {
+            "delete": {
+                "tags": [
+                    "Categories"
+                ],
+                "summary": "Delete a category",
+                "operationId": "4c12e22a7f8c617bd83bfa1fdc05428d",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Deleted successfully"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "patch": {
+                "tags": [
+                    "Categories"
+                ],
+                "summary": "Update a category",
+                "operationId": "676afd4a424724819de3254bd9c74e57",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Updated Category"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Updated successfully"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/comments": {
+            "get": {
+                "tags": [
+                    "Comments"
+                ],
+                "summary": "Get a list of comments",
+                "operationId": "c3f567e6ca4c18c964d54311cde3e326",
+                "parameters": [
+                    {
+                        "name": "post_id",
+                        "in": "query",
+                        "description": "Filter comments by post_id",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Comments"
+                ],
+                "summary": "Create a new comment",
+                "operationId": "19a4ed2e85c0bee5804839ad1e2449c8",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "content",
+                                    "post_id"
+                                ],
+                                "properties": {
+                                    "content": {
+                                        "type": "string",
+                                        "example": "This is a comment."
+                                    },
+                                    "post_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Comment created successfully"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/contacts": {
+            "get": {
+                "tags": [
+                    "Contacts"
+                ],
+                "summary": "Get all contacts",
+                "description": "Get all contacts.",
+                "operationId": "0f9efb5609dbb039b35ecafb28e492a2",
+                "responses": {
+                    "200": {
+                        "description": "Contacts retrieved successfully"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Contacts"
+                ],
+                "summary": "Create a new contact",
+                "description": "Create a new contact.",
+                "operationId": "a3b0baf957a16c1ed505f2e8985c254c",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "fullname",
+                                    "email"
+                                ],
+                                "properties": {
+                                    "fullname": {
+                                        "type": "string",
+                                        "example": "John Doe"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "example": "john@example.com"
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "example": "Hello"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Contact created successfully"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/contacts/{id}": {
+            "delete": {
+                "tags": [
+                    "Contacts"
+                ],
+                "summary": "Delete a contact",
+                "description": "Delete a contact.",
+                "operationId": "3a78f2af1871a21a2b5a492134d72017",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Contact deleted successfully"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "patch": {
+                "tags": [
+                    "Contacts"
+                ],
+                "summary": "Update a contact",
+                "description": "Update a contact.",
+                "operationId": "189926711f9a4749815313e463a34387",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "fullname",
+                                    "email"
+                                ],
+                                "properties": {
+                                    "fullname": {
+                                        "type": "string",
+                                        "example": "Jane Doe"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "example": "jane@example.com"
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "example": "Updated description"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Contact updated successfully"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/faqs": {
+            "get": {
+                "tags": [
+                    "FAQ"
+                ],
+                "summary": "Retrieve a list of FAQs",
+                "description": "Get a list of FAQs with filtering and pagination.",
+                "operationId": "73408674b20a8860b423db5d2b1e1758",
+                "parameters": [
+                    {
+                        "name": "search",
+                        "in": "query",
+                        "description": "Search FAQs by question or answer",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "per_page",
+                        "in": "query",
+                        "description": "Number of results per page",
+                        "schema": {
+                            "type": "integer",
+                            "default": 10
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List of FAQs"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "FAQ"
+                ],
+                "summary": "Create a new FAQ",
+                "description": "Create a new FAQ entry.",
+                "operationId": "6d9c3b0aacd9635f3dc7ea2c64cf9a79",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "question",
+                                    "answer"
+                                ],
+                                "properties": {
+                                    "question": {
+                                        "type": "string"
+                                    },
+                                    "question_vi": {
+                                        "type": "string"
+                                    },
+                                    "answer": {
+                                        "type": "string"
+                                    },
+                                    "answer_vi": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "FAQ created successfully"
+                    }
+                }
+            }
+        },
+        "/api/faqs/{id}": {
+            "delete": {
+                "tags": [
+                    "FAQ"
+                ],
+                "summary": "Delete an FAQ",
+                "description": "Delete an FAQ.",
+                "operationId": "3223ad724f63c8d885bff5eb25c4f30d",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "FAQ deleted successfully"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "patch": {
+                "tags": [
+                    "FAQ"
+                ],
+                "summary": "Update an existing FAQ",
+                "description": "Update an existing FAQ.",
+                "operationId": "9b64f0b2f2f655c56712e0611952f5e0",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "question",
+                                    "answer"
+                                ],
+                                "properties": {
+                                    "question": {
+                                        "type": "string"
+                                    },
+                                    "question_vi": {
+                                        "type": "string"
+                                    },
+                                    "answer": {
+                                        "type": "string"
+                                    },
+                                    "answer_vi": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "FAQ updated successfully"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/it-categories": {
+            "get": {
+                "tags": [
+                    "ITCategory"
+                ],
+                "summary": "Retrieve all IT categories",
+                "description": "Get a list of IT Categories.",
+                "operationId": "e4d884086dcf02e85ef7f245f9af22c6",
+                "parameters": [
+                    {
+                        "name": "search",
+                        "in": "query",
+                        "description": "Search categories by name",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "per_page",
+                        "in": "query",
+                        "description": "Results per page",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List of IT categories"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "ITCategory"
+                ],
+                "summary": "Create a new IT category",
+                "description": "Store a newly created IT Category.",
+                "operationId": "3778294646a812a2ef0e9c771413c94a",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Software Development"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "IT category created successfully"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/it-categories/all": {
+            "get": {
+                "tags": [
+                    "ITCategory"
+                ],
+                "summary": "Retrieve all IT categories",
+                "description": "Get a list of IT Categories.",
+                "operationId": "7d0d140e58856119142d25b992a25df9",
+                "responses": {
+                    "200": {
+                        "description": "List of IT categories"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/it-categories/{id}": {
+            "delete": {
+                "tags": [
+                    "ITCategory"
+                ],
+                "summary": "Delete an IT category",
+                "description": "Delete an IT Category.",
+                "operationId": "71dcaf056c6c48e93b82d2622706f43f",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "IT category deleted successfully"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "patch": {
+                "tags": [
+                    "ITCategory"
+                ],
+                "summary": "Update an existing IT category",
+                "description": "Update an IT Category.",
+                "operationId": "44cb6731b3f99bce5157c2eb0c7f74ea",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Updated Category Name"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "IT category updated successfully"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/languages": {
+            "get": {
+                "tags": [
+                    "Languages"
+                ],
+                "summary": "Get list of languages",
+                "description": "Display a listing of the resource.",
+                "operationId": "787f94fc503d720508bf14747580ce5a",
+                "responses": {
+                    "200": {
+                        "description": "List of languages"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Languages"
+                ],
+                "summary": "Create a new language",
+                "description": "Store a newly created resource in storage.",
+                "operationId": "16fdeaa3d081cb00a33751b2d944c7a6",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "icon"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "English"
+                                    },
+                                    "icon": {
+                                        "type": "string",
+                                        "example": "🇬🇧"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Language created successfully"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/languages/{id}": {
+            "delete": {
+                "tags": [
+                    "Languages"
+                ],
+                "summary": "Delete a language",
+                "description": "Remove the specified resource from storage.",
+                "operationId": "c7f0f18e0948403390ac36774a350e40",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Language deleted successfully"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "patch": {
+                "tags": [
+                    "Languages"
+                ],
+                "summary": "Update an existing language",
+                "description": "Update the specified resource in storage.",
+                "operationId": "6918a00366edd3d63484028616461082",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "icon"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "French"
+                                    },
+                                    "icon": {
+                                        "type": "string",
+                                        "example": "🇫🇷"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Language updated successfully"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/logs": {
+            "get": {
+                "tags": [
+                    "Log"
+                ],
+                "summary": "Get list of logs",
+                "description": "Display a listing of logs with filtering and pagination.",
+                "operationId": "07258c00ce1b2cbc7c7151a7cc8ca986",
+                "parameters": [
+                    {
+                        "name": "method",
+                        "in": "query",
+                        "description": "Filter logs by method",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "email",
+                        "in": "query",
+                        "description": "Filter logs by email",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "action",
+                        "in": "query",
+                        "description": "Filter logs by action",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "per_page",
+                        "in": "query",
+                        "description": "Number of results per page",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "default": 10
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List of logs"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/payments": {
+            "get": {
+                "tags": [
+                    "Payments"
+                ],
+                "summary": "Get all payments with pagination & filtering",
+                "operationId": "826dc6b24dd704607aa018a59207dd96",
+                "parameters": [
+                    {
+                        "name": "status",
+                        "in": "query",
+                        "description": "Filter by status (PENDDING, COMPLETED, CANCELED)",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "user_id",
+                        "in": "query",
+                        "description": "Filter by user ID",
+                        "required": false,
+                        "schema": {
+                            "type": "uuid"
+                        }
+                    },
+                    {
+                        "name": "per_page",
+                        "in": "query",
+                        "description": "Number of items per page",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "default": 10
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Payments"
+                ],
+                "summary": "Create a new payment",
+                "operationId": "5e2794ba3d3c64e70873367505e4a751",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "amount",
+                                    "status",
+                                    "user_id"
+                                ],
+                                "properties": {
+                                    "amount": {
+                                        "type": "number",
+                                        "format": "float"
+                                    },
+                                    "status": {
+                                        "type": "string",
+                                        "enum": [
+                                            "PENDDING",
+                                            "COMPLETED",
+                                            "CANCELED"
+                                        ]
+                                    },
+                                    "user_id": {
+                                        "type": "string",
+                                        "format": "uuid"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Created"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/payments/{id}": {
+            "get": {
+                "tags": [
+                    "Payments"
+                ],
+                "summary": "Get payment by ID",
+                "operationId": "a9a7656e0f22931dbcedc57a2d959554",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Payments"
+                ],
+                "summary": "Delete a payment",
+                "operationId": "eee625edf09d69ad0d35b893a3b4f087",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Deleted"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "patch": {
+                "tags": [
+                    "Payments"
+                ],
+                "summary": "Update a payment",
+                "operationId": "013388a45e29adc39097fa96ae996cf1",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "status": {
+                                        "type": "string",
+                                        "enum": [
+                                            "PENDDING",
+                                            "COMPLETED",
+                                            "CANCELED"
+                                        ]
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Updated"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/payments/stats": {
+            "get": {
+                "tags": [
+                    "Payments"
+                ],
+                "summary": "Get payment statistic",
+                "operationId": "bcfe1f27308eca1f5bf0ef46a41d557c",
+                "responses": {
+                    "200": {
+                        "description": "Get payment statistic",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "PENDING": {
+                                            "type": "integer",
+                                            "example": 5
+                                        },
+                                        "COMPLETED": {
+                                            "type": "integer",
+                                            "example": 10
+                                        },
+                                        "CANCELED": {
+                                            "type": "integer",
+                                            "example": 2
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/posts": {
+            "get": {
+                "tags": [
+                    "Posts"
+                ],
+                "summary": "Retrieve the list of posts",
+                "description": "Get the list of posts.",
+                "operationId": "e9eaf7df702a94f4443677bd1a36cfe6",
+                "responses": {
+                    "200": {
+                        "description": "List of posts"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Posts"
+                ],
+                "summary": "Create a new post",
+                "description": "Store a new post.",
+                "operationId": "4a657e51a0066c64781851f2fd2651e2",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "title",
+                                    "title_vi",
+                                    "description",
+                                    "description_vi"
+                                ],
+                                "properties": {
+                                    "title": {
+                                        "type": "string",
+                                        "example": "My Post"
+                                    },
+                                    "title_vi": {
+                                        "type": "string",
+                                        "example": "Bài viết của tôi"
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "example": "This is a post"
+                                    },
+                                    "description_vi": {
+                                        "type": "string",
+                                        "example": "Đây là bài viết"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Post created successfully"
+                    },
+                    "400": {
+                        "description": "Invalid input"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/posts/{id}": {
+            "delete": {
+                "tags": [
+                    "Posts"
+                ],
+                "summary": "Delete a post",
+                "description": "Delete a post.",
+                "operationId": "fad1726bd24cd459fc1525b67985df39",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Post ID to delete",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Post deleted successfully"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "404": {
+                        "description": "Post not found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "patch": {
+                "tags": [
+                    "Posts"
+                ],
+                "summary": "Update a post",
+                "description": "Update a post.",
+                "operationId": "bd0f2d7a9af7f3cc0f455045c2b8750e",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Post ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "title",
+                                    "title_vi",
+                                    "description",
+                                    "description_vi"
+                                ],
+                                "properties": {
+                                    "title": {
+                                        "type": "string",
+                                        "example": "Updated Post"
+                                    },
+                                    "title_vi": {
+                                        "type": "string",
+                                        "example": "Bài viết cập nhật"
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "example": "Updated content"
+                                    },
+                                    "description_vi": {
+                                        "type": "string",
+                                        "example": "Nội dung cập nhật"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Post updated successfully"
+                    },
+                    "400": {
+                        "description": "Invalid input"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "404": {
+                        "description": "Post not found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/posts/{id}/image": {
+            "put": {
+                "tags": [
+                    "Posts"
+                ],
+                "summary": "Update post image link",
+                "description": "Update the image link of a post.",
+                "operationId": "d591d321ed08b4818970c8d54e2a9c27",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Post ID to update image",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "image"
+                                ],
+                                "properties": {
+                                    "image": {
+                                        "type": "string",
+                                        "example": "https://example.com/new-image.jpg"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Image updated successfully"
+                    },
+                    "400": {
+                        "description": "Invalid image URL"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "404": {
+                        "description": "Post not found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/projects": {
+            "get": {
+                "tags": [
+                    "Projects"
+                ],
+                "summary": "Get list of projects",
+                "operationId": "8d4a13ef3fc773ff4031e515460919ea",
+                "parameters": [
+                    {
+                        "name": "search",
+                        "in": "query",
+                        "description": "Search projects by name",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "per_page",
+                        "in": "query",
+                        "description": "Number of results per page",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List of projects"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Projects"
+                ],
+                "summary": "Create a new project with file links",
+                "operationId": "a4dd4c17bf5fc24c224357f03dcc848a",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "price",
+                                    "status",
+                                    "duration",
+                                    "category_id"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Project X"
+                                    },
+                                    "price": {
+                                        "type": "number",
+                                        "example": 1000.5
+                                    },
+                                    "status": {
+                                        "type": "string",
+                                        "example": "initalize"
+                                    },
+                                    "duration": {
+                                        "type": "string",
+                                        "example": "2025/12/12"
+                                    },
+                                    "technologies": {
+                                        "type": "integer",
+                                        "example": 30
+                                    },
+                                    "category_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "files": {
+                                        "type": "array",
+                                        "items": {
+                                            "properties": {
+                                                "name": {
+                                                    "type": "string",
+                                                    "example": "File 1"
+                                                },
+                                                "link": {
+                                                    "type": "string",
+                                                    "example": "https://example.com/file.pdf"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Project created successfully"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/projects/sync-technologies/{id}": {
+            "patch": {
+                "tags": [
+                    "Projects"
+                ],
+                "summary": "Sync technologies for a project",
+                "operationId": "a98a982363632efda6d5839eb46e7f94",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "project ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "technology_ids"
+                                ],
+                                "properties": {
+                                    "technology_ids": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "integer"
+                                        },
+                                        "example": [
+                                            1,
+                                            2,
+                                            3
+                                        ]
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Project updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Project updated successfully"
+                                        },
+                                        "projects_id": {
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "technologies": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "integer"
+                                            },
+                                            "example": [
+                                                1,
+                                                2,
+                                                3
+                                            ]
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/projects/{id}": {
+            "delete": {
+                "tags": [
+                    "Projects"
+                ],
+                "summary": "Delete a project",
+                "operationId": "187865e30ff6b72f1cea3037d9dd84fa",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Project deleted successfully"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/projects/count": {
+            "get": {
+                "tags": [
+                    "Projects"
+                ],
+                "summary": "Get project count by status",
+                "description": "Returns the number of projects for each status",
+                "operationId": "bda2ea6383c164554b6c67168faa4b07",
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                },
+                                "example": {
+                                    "initalize": 5,
+                                    "pending": 10,
+                                    "in_progress": 3,
+                                    "completed": 8
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/projects/{id}/status": {
+            "patch": {
+                "tags": [
+                    "Projects"
+                ],
+                "summary": "Update project status",
+                "operationId": "2f5ce859e2f2402cdc909ee0d428f765",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Project ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "status"
+                                ],
+                                "properties": {
+                                    "status": {
+                                        "type": "string",
+                                        "enum": [
+                                            "initalize",
+                                            "pending",
+                                            "in_progress",
+                                            "completed",
+                                            "canceled"
+                                        ]
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Status updated successfully"
+                    },
+                    "404": {
+                        "description": "Project not found"
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/transactions/verify": {
+            "post": {
+                "tags": [
+                    "Transactions"
+                ],
+                "summary": "Verify transactions with null content",
+                "description": "Fetch transactions where transaction_content is null for a given project.",
+                "operationId": "c9f6480de2aaa16304cb3b7a4828e3d1",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "project_id"
+                                ],
+                                "properties": {
+                                    "project_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "List of transactions with null content",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "id": {
+                                                "type": "integer",
+                                                "example": 1
+                                            },
+                                            "gateway": {
+                                                "type": "string",
+                                                "example": "PayPal"
+                                            },
+                                            "transaction_date": {
+                                                "type": "string",
+                                                "format": "date-time",
+                                                "example": "2025-03-14 12:00:00"
+                                            },
+                                            "amount_in": {
+                                                "type": "number",
+                                                "format": "float",
+                                                "example": 100.5
+                                            },
+                                            "amount_out": {
+                                                "type": "number",
+                                                "format": "float",
+                                                "example": 0
+                                            },
+                                            "transaction_content": {
+                                                "type": "string",
+                                                "example": null,
+                                                "nullable": true
+                                            },
+                                            "reference_number": {
+                                                "type": "string",
+                                                "example": "REF123"
+                                            },
+                                            "project_id": {
+                                                "type": "integer",
+                                                "example": 1
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized - Token required"
+                    },
+                    "404": {
+                        "description": "Project not found"
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/projects/statistics": {
+            "get": {
+                "tags": [
+                    "Projects"
+                ],
+                "summary": "Get project statistics",
+                "description": "Returns the statistics of the projects, including revenue data by month.",
+                "operationId": "7ade7cca5814e863a55556aaeca619d5",
+                "responses": {
+                    "200": {
+                        "description": "Successfully retrieved project statistics",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "months": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "string",
+                                                "example": "Jan"
+                                            }
+                                        },
+                                        "revenue": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "number",
+                                                "example": 5000
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/rate": {
+            "post": {
+                "tags": [
+                    "Rates"
+                ],
+                "summary": "Rate a post",
+                "description": "Allows a user to rate a post with either 'STAR' or 'LIKE'. If the same rating exists, it will be removed. If a different rating exists, it will be updated.",
+                "operationId": "ratePost",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "post_id",
+                                    "like"
+                                ],
+                                "properties": {
+                                    "post_id": {
+                                        "description": "The ID of the post",
+                                        "type": "integer",
+                                        "example": 5
+                                    },
+                                    "like": {
+                                        "description": "The type of rating",
+                                        "type": "string",
+                                        "enum": [
+                                            "STAR",
+                                            "LIKE"
+                                        ],
+                                        "example": "STAR"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Rating added successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Star added successfully"
+                                        },
+                                        "rate": {
+                                            "properties": {
+                                                "user_id": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "post_id": {
+                                                    "type": "integer",
+                                                    "example": 5
+                                                },
+                                                "like": {
+                                                    "type": "string",
+                                                    "example": "STAR"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "description": "Rating updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Rating updated successfully"
+                                        },
+                                        "rate": {
+                                            "properties": {
+                                                "user_id": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "post_id": {
+                                                    "type": "integer",
+                                                    "example": 5
+                                                },
+                                                "like": {
+                                                    "type": "string",
+                                                    "example": "LIKE"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "The given data was invalid."
+                                        },
+                                        "errors": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/refunds": {
+            "get": {
+                "tags": [
+                    "Refunds"
+                ],
+                "summary": "Get list of refunds",
+                "description": "Display a paginated list of refuns.",
+                "operationId": "f6120e671b0e979a8458231e51021066",
+                "parameters": [
+                    {
+                        "name": "per_page",
+                        "in": "query",
+                        "description": "Number of refunds per page",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List of refunds"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Refunds"
+                ],
+                "summary": "Create a new refund",
+                "description": "Store a newly created refund in storage.",
+                "operationId": "4b30fa6a2d9e357459dd51684a31030a",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "refund_amount",
+                                    "status",
+                                    "transaction_id"
+                                ],
+                                "properties": {
+                                    "refund_amount": {
+                                        "type": "number",
+                                        "format": "decimal",
+                                        "example": 150.75
+                                    },
+                                    "status": {
+                                        "type": "string",
+                                        "example": "Pending"
+                                    },
+                                    "transaction_id": {
+                                        "type": "integer",
+                                        "example": 1023
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Refund created successfully"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/refunds/{id}": {
+            "patch": {
+                "tags": [
+                    "Refunds"
+                ],
+                "summary": "Update an existing refund",
+                "description": "Update an existing refund.",
+                "operationId": "88f01f2225d4388d3e7acc10ce7f6ed6",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Refund ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "refund_amount",
+                                    "status"
+                                ],
+                                "properties": {
+                                    "refund_amount": {
+                                        "type": "number",
+                                        "format": "decimal",
+                                        "example": 200
+                                    },
+                                    "status": {
+                                        "type": "string",
+                                        "example": "Approved"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Refund updated successfully"
+                    },
+                    "404": {
+                        "description": "Refund not found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/services": {
+            "get": {
+                "tags": [
+                    "Services"
+                ],
+                "summary": "Get a list of services with optional filters",
+                "operationId": "getServices",
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "Filter by service name",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "technology_id",
+                        "in": "query",
+                        "description": "Filter by service technology_id",
+                        "required": false,
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List of services",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Service"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Services"
+                ],
+                "summary": "Create a new service",
+                "operationId": "createService",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Service"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Service created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Service"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/services/all": {
+            "get": {
+                "tags": [
+                    "Services"
+                ],
+                "summary": "Get all services",
+                "operationId": "getAllServices",
+                "parameters": [
+                    {
+                        "name": "keyword",
+                        "in": "query",
+                        "description": "Filter by service keyword",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List of services",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Service"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/services/{id}": {
+            "put": {
+                "tags": [
+                    "Services"
+                ],
+                "summary": "Update an existing service",
+                "operationId": "updateService",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the service to update",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Service"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Service updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Service"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Service not found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Services"
+                ],
+                "summary": "Delete a service",
+                "operationId": "deleteService",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Service deleted successfully"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "patch": {
+                "tags": [
+                    "Services"
+                ],
+                "summary": "Sync technologies for a service",
+                "operationId": "15b04fed30ca919f8cf3d049cf186049",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Service ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "technologies"
+                                ],
+                                "properties": {
+                                    "technologies": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "integer"
+                                        },
+                                        "example": [
+                                            1,
+                                            2,
+                                            3
+                                        ]
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Technologies updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Technologies updated successfully"
+                                        },
+                                        "service_id": {
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "technologies": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "integer"
+                                            },
+                                            "example": [
+                                                1,
+                                                2,
+                                                3
+                                            ]
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/settings": {
+            "get": {
+                "tags": [
+                    "Settings"
+                ],
+                "summary": "Get settings",
+                "description": "Display the settings.",
+                "operationId": "04b6f539c3af7d460d214177ac396d5e",
+                "responses": {
+                    "200": {
+                        "description": "Settings retrieved successfully"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Settings"
+                ],
+                "summary": "Update settings",
+                "description": "Update settings.",
+                "operationId": "903d931bbeba813e2aef0b0ae75815fb",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "time_update_service",
+                                    "time_update_order",
+                                    "time_deny_order",
+                                    "time_exchange_rate",
+                                    "account_no"
+                                ],
+                                "properties": {
+                                    "time_update_service": {
+                                        "type": "string",
+                                        "example": "14:30:00"
+                                    },
+                                    "time_update_order": {
+                                        "type": "string",
+                                        "example": "15:00:00"
+                                    },
+                                    "time_deny_order": {
+                                        "type": "string",
+                                        "example": "16:00:00"
+                                    },
+                                    "time_exchange_rate": {
+                                        "type": "string",
+                                        "example": "17:30:00"
+                                    },
+                                    "account_no": {
+                                        "type": "string",
+                                        "example": "123456789"
+                                    },
+                                    "phone": {
+                                        "type": "string",
+                                        "example": "123-456-7890"
+                                    },
+                                    "facebook": {
+                                        "type": "string",
+                                        "example": "https://facebook.com/example"
+                                    },
+                                    "zalo": {
+                                        "type": "string",
+                                        "example": "0987654321"
+                                    },
+                                    "bank_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Settings updated successfully"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/technologies": {
+            "get": {
+                "tags": [
+                    "Technology"
+                ],
+                "summary": "Get list of technologies",
+                "description": "Display a listing of technologies with filtering and pagination.",
+                "operationId": "270ac03d60141f2aa3425a6477500618",
+                "parameters": [
+                    {
+                        "name": "search",
+                        "in": "query",
+                        "description": "Search technologies by name",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "per_page",
+                        "in": "query",
+                        "description": "Number of results per page",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List of technologies"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Technology"
+                ],
+                "summary": "Create a new technology",
+                "description": "Store a newly created technology.",
+                "operationId": "de6ce7d4349e250082a7e1d523c87162",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "icon"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Laravel"
+                                    },
+                                    "icon": {
+                                        "type": "string",
+                                        "example": "laravel.svg"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Technology created successfully"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/technologies/all": {
+            "get": {
+                "tags": [
+                    "Technology"
+                ],
+                "summary": "Get list of technologies",
+                "description": "Display a listing of technologies with filtering and pagination.",
+                "operationId": "82972e204e68113963a968108f873a91",
+                "responses": {
+                    "200": {
+                        "description": "List of technologies"
+                    }
+                }
+            }
+        },
+        "/api/technologies/{id}": {
+            "delete": {
+                "tags": [
+                    "Technology"
+                ],
+                "summary": "Delete a technology",
+                "description": "Remove the specified technology.",
+                "operationId": "84d1fb75f463716c44eff7213c1f3d11",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Technology deleted successfully"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "patch": {
+                "tags": [
+                    "Technology"
+                ],
+                "summary": "Update a technology",
+                "description": "Update the specified technology.",
+                "operationId": "15bf24b42c6926dabbdefa35fcb06852",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "icon"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Updated Tech"
+                                    },
+                                    "icon": {
+                                        "type": "string",
+                                        "example": "updated-icon.svg"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Technology updated successfully"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/technologies/update-language/{id}": {
+            "patch": {
+                "tags": [
+                    "Technology"
+                ],
+                "summary": "Sync languages for a technology",
+                "operationId": "013e97e65f1f781169d99782ed087381",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "technology ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "language_ids"
+                                ],
+                                "properties": {
+                                    "language_ids": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "integer"
+                                        },
+                                        "example": [
+                                            1,
+                                            2,
+                                            3
+                                        ]
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Technologies updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Technologies updated successfully"
+                                        },
+                                        "service_id": {
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "technologies": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "integer"
+                                            },
+                                            "example": [
+                                                1,
+                                                2,
+                                                3
+                                            ]
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/technologies/update-ittechnology/{id}": {
+            "patch": {
+                "tags": [
+                    "Technology"
+                ],
+                "summary": "Sync it-technology for a technology",
+                "operationId": "1037a7d8fad94b5eeb266c4bb72819f6",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "technology ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "ittechnology_ids"
+                                ],
+                                "properties": {
+                                    "ittechnology_ids": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "integer"
+                                        },
+                                        "example": [
+                                            1,
+                                            2,
+                                            3
+                                        ]
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Technologies updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Technologies updated successfully"
+                                        },
+                                        "service_id": {
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "technologies": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "integer"
+                                            },
+                                            "example": [
+                                                1,
+                                                2,
+                                                3
+                                            ]
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/transactions": {
+            "post": {
+                "tags": [
+                    "Transactions"
+                ],
+                "summary": "Create a new transaction",
+                "description": "Stores a new transaction in the database.",
+                "operationId": "ab765dced58cfe2f620929db31452145",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "gateway",
+                                    "transaction_date",
+                                    "account_number",
+                                    "project_id"
+                                ],
+                                "properties": {
+                                    "gateway": {
+                                        "type": "string",
+                                        "example": "PayPal"
+                                    },
+                                    "transaction_date": {
+                                        "type": "string",
+                                        "format": "date-time",
+                                        "example": "2025-03-14 12:00:00"
+                                    },
+                                    "account_number": {
+                                        "type": "string",
+                                        "example": "123456789"
+                                    },
+                                    "amount_in": {
+                                        "type": "number",
+                                        "format": "float",
+                                        "example": 100.5
+                                    },
+                                    "amount_out": {
+                                        "type": "number",
+                                        "format": "float",
+                                        "example": 0
+                                    },
+                                    "accumulated": {
+                                        "type": "number",
+                                        "format": "float",
+                                        "example": 150
+                                    },
+                                    "code": {
+                                        "type": "string",
+                                        "example": "TXN123"
+                                    },
+                                    "transaction_content": {
+                                        "type": "string",
+                                        "example": "Payment received"
+                                    },
+                                    "reference_number": {
+                                        "type": "string",
+                                        "example": "REF123"
+                                    },
+                                    "body": {
+                                        "type": "string",
+                                        "example": "Details about the transaction"
+                                    },
+                                    "project_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Transaction created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "gateway": {
+                                            "type": "string",
+                                            "example": "PayPal"
+                                        },
+                                        "transaction_date": {
+                                            "type": "string",
+                                            "format": "date-time",
+                                            "example": "2025-03-14 12:00:00"
+                                        },
+                                        "account_number": {
+                                            "type": "string",
+                                            "example": "123456789"
+                                        },
+                                        "amount_in": {
+                                            "type": "number",
+                                            "format": "float",
+                                            "example": 100.5
+                                        },
+                                        "amount_out": {
+                                            "type": "number",
+                                            "format": "float",
+                                            "example": 0
+                                        },
+                                        "accumulated": {
+                                            "type": "number",
+                                            "format": "float",
+                                            "example": 150
+                                        },
+                                        "code": {
+                                            "type": "string",
+                                            "example": "TXN123"
+                                        },
+                                        "transaction_content": {
+                                            "type": "string",
+                                            "example": "Payment received"
+                                        },
+                                        "reference_number": {
+                                            "type": "string",
+                                            "example": "REF123"
+                                        },
+                                        "body": {
+                                            "type": "string",
+                                            "example": "Details about the transaction"
+                                        },
+                                        "project_id": {
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "created_at": {
+                                            "type": "string",
+                                            "format": "date-time",
+                                            "example": "2025-03-14T12:00:00Z"
+                                        },
+                                        "updated_at": {
+                                            "type": "string",
+                                            "format": "date-time",
+                                            "example": "2025-03-14T12:00:00Z"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized - Token required"
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/users": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Get a list of users",
+                "description": "List users with pagination and filtering.",
+                "operationId": "c457726701591d1183b53aa71fc13441",
+                "parameters": [
+                    {
+                        "name": "keyword",
+                        "in": "query",
+                        "description": "Filter by keyword",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Page number",
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    },
+                    {
+                        "name": "per_page",
+                        "in": "query",
+                        "description": "Items per page",
+                        "schema": {
+                            "type": "integer",
+                            "example": 10
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List of users"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/users/all": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Get a list of users",
+                "description": "List users with pagination and filtering.",
+                "operationId": "de73fbcc50fabff762c3c53215607f3d",
+                "responses": {
+                    "200": {
+                        "description": "List of users"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/users/{user}/update-password": {
+            "post": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Update user password (Admin Only)",
+                "operationId": "7c931dd88d529713c00b98c3506d1b3f",
+                "parameters": [
+                    {
+                        "name": "user",
+                        "in": "path",
+                        "description": "User ID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "new_password",
+                                    "new_password_confirmation"
+                                ],
+                                "properties": {
+                                    "new_password": {
+                                        "type": "string",
+                                        "example": "newpassword123"
+                                    },
+                                    "new_password_confirmation": {
+                                        "type": "string",
+                                        "example": "newpassword123"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Password updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Password updated successfully"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "The new password must be at least 6 characters."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthenticated."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/users/total-funds-remains": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Retrieve total funds and remains",
+                "description": "Get the total sum of funds and remains for all users.",
+                "operationId": "474e16c9644ccb543c5cbb89ff29c703",
+                "responses": {
+                    "200": {
+                        "description": "Totals retrieved successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "total_fund": {
+                                            "type": "number",
+                                            "format": "float",
+                                            "example": 12345.67
+                                        },
+                                        "total_remains": {
+                                            "type": "number",
+                                            "format": "float",
+                                            "example": 8901.23
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Service": {
+                "title": "Service",
+                "description": "Service entity",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "Web Hosting"
+                    },
+                    "amount": {
+                        "type": "integer",
+                        "example": 100
+                    },
+                    "price": {
+                        "type": "number",
+                        "format": "decimal",
+                        "example": 99.99
+                    },
+                    "description": {
+                        "type": "string",
+                        "example": "Premium hosting service",
+                        "nullable": true
+                    },
+                    "rate": {
+                        "type": "number",
+                        "format": "decimal",
+                        "example": 4.5,
+                        "nullable": true
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "bearerFormat": "JWT",
+                "scheme": "bearer"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Auth",
+            "description": ""
+        },
+        {
+            "name": "Bank"
+        },
+        {
+            "name": "Cashflows",
+            "description": "API Endpoints for Cashflows"
+        },
+        {
+            "name": "Categories"
+        },
+        {
+            "name": "Contacts",
+            "description": "API Endpoints for managing contacts"
+        },
+        {
+            "name": "FAQ",
+            "description": "FAQ Management API"
+        },
+        {
+            "name": "ITCategory",
+            "description": "Operations related to IT Categories"
+        },
+        {
+            "name": "Languages",
+            "description": "API Endpoints for managing languages"
+        },
+        {
+            "name": "Log",
+            "description": "Operations related to logs"
+        },
+        {
+            "name": "Payments",
+            "description": "API Endpoints for Managing payments"
+        },
+        {
+            "name": "Posts",
+            "description": "API for managing posts"
+        },
+        {
+            "name": "Projects",
+            "description": "API Endpoints for Managing Projects"
+        },
+        {
+            "name": "Rates",
+            "description": "Endpoints for rating posts"
+        },
+        {
+            "name": "Refunds",
+            "description": "API Endpoints for Refunds"
+        },
+        {
+            "name": "Settings",
+            "description": "API Endpoints for managing settings"
+        },
+        {
+            "name": "Technology",
+            "description": "Technology management"
+        },
+        {
+            "name": "Users",
+            "description": "Technology management"
+        },
+        {
+            "name": "Comments",
+            "description": "Comments"
+        },
+        {
+            "name": "Transactions",
+            "description": "Transactions"
+        },
+        {
+            "name": "Services",
+            "description": "Services"
+        }
+    ]
+}
